@@ -1,25 +1,26 @@
 # Drone Barato
 
-`CAMPUS/UNIDADE`
+`Campus Coração Eucarístico`
 
-`CURSO`
+`Engenharia da Computação`
 
-`SEMESTRE`
+`1º Semestre`
 
-`DISCIPLINA`
+`Laboratório de introdução à computação`
 
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
+* Erasto Teixeira Dib
+* Gabriel Logan Dias Porto
+* Kleber Rhuan Costa da Silva
+* Luan Marcos Rodrigues Brito
+* Paulo Arthur Abreu de Oliveira Silvério
+* Victor Miyamoto
 
 ## Orientador
 
-* Nome completo do professor 1
+* Marta Dias Moreira Noronha
 
 ## Resumo
 
