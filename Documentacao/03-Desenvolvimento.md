@@ -77,7 +77,7 @@ Quando o usuário toca nas setas, o App Inventor envia esses comandos diretament
 
 Após receber os comandos via Bluetooth, o controle interpreta as informações e envia os sinais para o drone utilizando um módulo de rádio NRF24L01 (long range antenna).
 O processo funciona assim:
-- O controle recebe os comandos via Bluetooth HC-05.
+- O controle recebe os comandos via Bluetooth HC-06.
 - O microcontrolador converte os comandos recebidos em pacotes adequados para o drone.
 - O módulo NRF24L01 transmissor, instalado no controle, envia esses pacotes.
 - O NRF24L01 receptor, presente no drone, recebe os dados e os entrega ao firmware MultiWii.
