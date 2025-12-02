@@ -4,7 +4,7 @@
 
 `Engenharia da Computação`
 
-`1º Semestre`
+`2º Semestre 2025`
 
 `Laboratório de introdução à computação`
 
