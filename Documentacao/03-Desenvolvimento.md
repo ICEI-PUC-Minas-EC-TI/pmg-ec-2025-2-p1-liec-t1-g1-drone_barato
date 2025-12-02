@@ -2,7 +2,20 @@
 # Materiais
 
 Os materiais utilizados no projeto foram:
-- Liste os materiais usados no projeto, como Arduino/ESP, sensores, atuadores e outros.
+- Arduino Pro mini 5v 16Mhz
+- ⁠Arduino nano 5v ATMEGA328
+- ⁠5 x Reguladores de Tensao AMS1117
+- ⁠Bateria Lipo 3.7v
+- ⁠4 Motores sem Nucleo 716mm com 55.000RPM
+- ⁠1x nrf24l01
+- ⁠1 x nrf24l01 Com Antena
+- ⁠Circuito Integrado PS2
+- ⁠4x Diodo SS14
+- ⁠4x Transistores AO3400
+- ⁠4x Resistores 10k 1/4w
+- ⁠MPU 6050 - Acelerometro
+- ⁠Modulo HC-06 Bluetooth Slave
+- ⁠Bateria 9V
 
 # Desenvolvimento
 
@@ -36,25 +49,35 @@ O integrante responsável pela montagem principal organizou as etapas e garantiu
 
 ### Desenvolvimento do Código
 
-O drone utiliza um código Arduino complexo e altamente versátil, baseado no software de multicópteros MultiWii, que é responsável por gerenciar praticamente todas as funções de voo. O MultiWii é estruturado em múltiplas abas dentro do código, permitindo controlar separadamente funções como:
-- leitura dos sensores (acelerômetro/giroscópio),
-- estabilização por PID,
-- gerenciamento dos motores,
-- comunicação com o controle remoto,
+O drone utiliza um código Arduino complexo e altamente versátil, baseado no firmware de multicópteros MultiWii, responsável por gerenciar praticamente todas as funções essenciais de voo. O MultiWii é organizado em diversas abas no código, permitindo controlar de forma separada funções como:
+- leitura de sensores (acelerômetro e giroscópio);
+- estabilização via controladores PID;
+- gerenciamento individual dos motores;
+- comunicação com o controle remoto;
 - modos de voo e parâmetros avançados.
+  
+Apesar de ser um firmware robusto e amplo, muitas das funcionalidades presentes nas abas do MultiWii não foram utilizadas no projeto, já que o drone construído é uma versão simplificada, voltada apenas para o básico necessário para voo.
 
-Embora seja um firmware robusto e abrangente, muitas das funcionalidades presentes nas abas do MultiWii não foram utilizadas neste projeto, já que o drone construído é uma versão simplificada e focada apenas no essencial para voo.
-
-O código utilizado no projeto não foi desenvolvido do zero por nós. Ele foi uma adaptação disponibilizada pelo criador original do tutorial, com créditos ao canal Electronoobs, que disponibilizou uma versão ajustada do MultiWii para drones pequenos. Essa base foi escolhida porque já estava otimizada para o tipo de hardware utilizado e oferecia estabilidade e confiabilidade durante o voo.
+O código de voo utilizado pelo drone não foi desenvolvido por nosso grupo. Ele foi uma adaptação disponibilizada pelo criador original do tutorial, com créditos ao canal Electronoobs, que forneceu uma versão ajustada do MultiWii para drones pequenos. Essa base foi escolhida por já estar otimizada para o tipo de hardware utilizado, além de proporcionar estabilidade e confiabilidade durante o voo.
 
 Para trabalhar com o firmware, foi necessário:
-- conectar o drone ao computador por meio de um conversor FTDI,
-- abrir o código completo, contendo todas as abas do MultiWii,
-- carregar esse firmware na placa controladora (Arduino),
-- ajustar parâmetros específicos do hardware utilizado,
+- conectar o drone ao computador por meio de um conversor FTDI;
+- abrir o código completo, contendo todas as abas do MultiWii;
+- carregar o firmware na placa controladora;
+- ajustar parâmetros específicos do hardware utilizado;
 - calibrar sensores e verificar a resposta dos motores.
 
-Ou seja, embora nosso grupo não tenha programado o controle de voo do zero, houve um trabalho importante de compreensão, configuração, calibração e adaptação do firmware ao projeto construído. O MultiWii executa a maior parte das funções críticas do drone, e o papel do grupo foi garantir que tudo estivesse alinhado ao hardware desenvolvido.
+Ou seja, mesmo não tendo programado o controle de voo do zero, o grupo realizou um trabalho essencial de compreensão, configuração, calibração e adaptação do firmware para o drone desenvolvido.
+
+Diferentemente do firmware do drone, todo o sistema de controle foi desenvolvido integralmente por nós, tanto na versão física (com joysticks) quanto na versão digital (aplicativo Android).
+
+O aplicativo foi criado para operar como um controle alternativo, utilizando dois conjuntos de setas para simular os dois joysticks tradicionais (esquerdo e direito). Essa abordagem simplificada permitiu:
+- maior acessibilidade;
+- controle via celular;
+- redução de custos;
+- facilidade de uso por iniciantes.
+
+O controle físico, por sua vez, também foi programado totalmente pelo grupo, utilizando leitura analógica dos joysticks, envio de comandos por rádio e comunicação direta com o receptor do drone.
 
 ## Comunicação entre App e Hardware
 
