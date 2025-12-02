@@ -16,7 +16,7 @@
 * Kleber Rhuan Costa da Silva
 * Luan Marcos Rodrigues Brito
 * Paulo Arthur Abreu de Oliveira Silvério
-* Victor Miyamoto
+* Victor Yukio Righi Miyamoto
 
 ## Orientador
 
