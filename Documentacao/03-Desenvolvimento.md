@@ -25,15 +25,13 @@ Os materiais utilizados no projeto foram:
 
 A interface do aplicativo foi desenvolvida buscando simplicidade e fácil interação. A construção visual priorizou:
 - listagem das informações que poderíamos conseguir com o drone em funcionamento;
-- organização clara dos botões e comandos;
 
 ### Código
 
 A implementação do código do aplicativo foi realizada utilizando o ambiente de desenvolvimento do MIT APP Inventor. O código foi estruturado para:
 
-- capturar inputs do usuário através da interface;
-- enviar comandos para o módulo bluetooth do controle;
 - receber informações vindas do controle;
+- exibir elas de forma organizada na tela;
 
 ## Desenvolvimento do Hardware
 
@@ -81,34 +79,40 @@ O controle físico, por sua vez, também foi programado totalmente pelo grupo, u
 
 ## Comunicação entre App e Hardware
 
-A comunicação entre o aplicativo desenvolvido no MIT App Inventor e o drone funciona como uma alternativa simples ao controle físico tradicional. Embora o drone possa ser pilotado diretamente pelo controle com joysticks, o app foi criado como um método secundário de operação, oferecendo comandos básicos via smartphone.
+A comunicação entre o aplicativo desenvolvido no MIT App Inventor e o drone foi projetada exclusivamente para receber dados de telemetria. Ou seja, o aplicativo não envia comandos de controle de voo — sua função é apenas exibir informações transmitidas pelo drone durante o funcionamento.
 
-A arquitetura de comunicação ocorre em duas etapas principais:
+Como o módulo Bluetooth está conectado ao controle físico, e não diretamente ao drone, o controle atua como um intermediário na transmissão das informações.
 
-1. Comunicação entre o Aplicativo e o Controle (Bluetooth)
+A arquitetura final de comunicação ocorre em duas etapas:
 
-O aplicativo envia sinais utilizando um módulo Bluetooth HC-05 conectado ao controle físico.
-Diferente do controle com joysticks analógicos, o aplicativo foi projetado com setas direcionais simples, permitindo apenas comandos essenciais, como:
-- subir / descer
-- mover-se para frente / trás
-- mover-se para esquerda / direita
-- girar
+### 1. Comunicação entre o Drone e o Controle (Rádio NRF24L01)
 
-Quando o usuário toca nas setas, o App Inventor envia esses comandos diretamente via Bluetooth para o controle.
+O drone envia constantemente seus dados de telemetria utilizando um módulo de rádio NRF24L01 instalado na placa controladora do drone. Os dados transmitidos podem incluir:
+- valores lidos do acelerômetro/giroscópio (MPU6050);
+- informações de estabilização e PID;
+- status dos motores;
+- tensões medidas;
+- dados de orientação (pitch, roll, yaw);
+- qualquer outro dado que o MultiWii esteja configurado para enviar.
 
-2. Comunicação entre o Controle e o Drone (Rádio NRF24L01)
+O fluxo funciona assim:
+- O drone coleta dados dos sensores e do firmware MultiWii.
+- O Arduino do drone empacota essas informações.
+- O NRF24L01 receptor (no drone) envia as informações ao
+NRF24L01 transmissor presente no controle.
+- O controle recebe os dados e prepara para enviá-los ao Bluetooth.
 
-Após receber os comandos via Bluetooth, o controle interpreta as informações e envia os sinais para o drone utilizando um módulo de rádio NRF24L01 (long range antenna).
-O processo funciona assim:
-- O controle recebe os comandos via Bluetooth HC-06.
-- O microcontrolador converte os comandos recebidos em pacotes adequados para o drone.
-- O módulo NRF24L01 transmissor, instalado no controle, envia esses pacotes.
-- O NRF24L01 receptor, presente no drone, recebe os dados e os entrega ao firmware MultiWii.
-- O MultiWii interpreta os comandos e ajusta os motores para executar a ação desejada.
+Assim, o controle funciona como um hub de retransmissão.
 
-3. Integração entre os dois métodos de controle
-   
-- O controle físico utiliza joysticks reais e oferece controle mais preciso.
-- O aplicativo foi criado como um controle alternativo e simplificado para testar o drone via smartphone.
+### 2. Comunicação entre o Controle e o Aplicativo (Bluetooth HC-06)
 
-Ambos enviam comandos a partir do controle, pois o smartphone nunca se comunica diretamente com o drone, apenas com o transmissor Bluetooth do controle.
+Após receber as informações enviadas via rádio pelo drone, o controle repassa esses dados para o aplicativo por meio do módulo Bluetooth HC-06.
+
+O funcionamento ocorre da seguinte forma:
+- o controle recebe os pacotes vindos do drone via NRF24L01;
+- o microcontrolador interpreta os dados recebidos;
+- esses dados são convertidos para um formato legível pelo aplicativo;
+- o módulo HC-06 transmite via Bluetooth para o smartphone;
+- o aplicativo exibe as informações em campos de texto específicos.
+
+Nenhum comando de voo é enviado pelo aplicativo — sua função é apenas exibir telemetria em tempo real.
