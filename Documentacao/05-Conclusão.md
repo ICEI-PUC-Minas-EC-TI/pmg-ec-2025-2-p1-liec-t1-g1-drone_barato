@@ -11,6 +11,5 @@ Outra decisão importante foi a não inclusão da câmera FPV presente no projet
 Diversas melhorias podem ser implementadas em versões futuras do projeto:
 
 - Uso de um filamento mais resistente para garantir maior durabilidade da estrutura e reduzir danos durante testes de voo.
-- Adição de sensores inerciais mais modernos (IMU com acelerômetro + giroscópio) para melhorar a estabilidade, tornando o voo mais suave e preciso.
 - Implementação de uma câmera FPV opcional, deseje ampliar a experiência de pilotagem em primeira pessoa.
-- Aprimoramento do app, permitindo controles mais precisos ou até modos automáticos simplificados.
+- Aprimoramento do app, permitindo controle do drone ou até modos automáticos simplificados.
