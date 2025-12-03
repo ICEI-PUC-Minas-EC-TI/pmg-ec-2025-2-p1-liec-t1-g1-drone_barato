@@ -1,4 +1,4 @@
-### Testes do Projeto
+# Testes do Projeto
 
 ## 1. Testes dos Motores
 
@@ -33,29 +33,26 @@ No caso do controle, os testes de condutividade foram fundamentais para identifi
 
 Esses problemas foram atribuídos ao uso de conexões temporárias, que não são ideais para projetos que dependem de precisão e estabilidade.
 
-## 3. Testes do Aplicativo (Controle Digital)
+## 3. Testes do Aplicativo
 
-O aplicativo Android também passou por testes práticos para verificar o envio de comandos e o funcionamento das setas em substituição aos joysticks. Os testes mostraram:
+O aplicativo Android também passou por testes práticos para verificar o recebimento de comandos e o funcionamento das setas em substituição aos joysticks. Os testes mostraram:
 
 - funcionamento estável;
 - boa responsividade;
 - comunicação consistente durante a operação.
 
-O controle digital conseguiu comunicar e trocar informações com o controle. Infelizmente não conseguimos testar essa conexão com o drone, pois após a montagem do mesmo, os problemas de transferência de energia dos módulos do controle surgiram.
-
 ## Resultados e Limitações Identificadas
 
-# Resultados positivos:
+### Resultados positivos:
 
-- Motores funcionaram corretamente após calibração;
+- Motores funcionaram corretamente;
 - Firmware MultiWii respondeu bem aos comandos;
 - Estrutura do drone suportou os testes iniciais;
-- Controle digital operou de forma estável;
 
-Limitações observadas:
+### Limitações observadas:
 
 - Uso de jumpers prejudicou a confiabilidade do controle físico;
-- Alguns módulos do controle físico apresentaram falhas intermitentes;
+- Alguns módulos do controle apresentaram falhas intermitentes;
 - Estrutura impressa em 3D mostrou fragilidade em pontos específicos;
 - Dependência de um firmware pré-existente limita personalização profunda;
-- Ausência de sensores como acelerômetro e giroscópio no controle reduz precisão.
+- Os motores não estavam recebendo energia suficiente, devido ao ESP comprado ter problema de distribuição de energia;
