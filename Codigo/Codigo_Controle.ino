@@ -32,6 +32,7 @@ RF24Data packet;
 bool ps2Ready = false;
 
 byte applyDeadband(byte v, bool invert) {
+  // Centraliza valores próximos ao neutro (128) para evitar ruído e opcionalmente inverte o eixo
   int val = invert ? (255 - v) : v;
   if (abs(val - 128) < deadband)
     val = 128;
@@ -104,74 +105,62 @@ void updatePacketFromPad() {
   packet.switches = readSwitches();
 }
 
+void sendLine(const char* label, int value) {
+  bt.print(label);
+  bt.print(value);
+  bt.print("\n");
+}
+
+void sendLineStr(const char* label, const char* value) {
+  bt.print(label);
+  bt.print(value);
+  bt.print("\n");
+}
+
+// Converte throttle de 0-255 para percentual 0-100 para leituras mais intuitivas
+int throttlePercent() {
+  return map(packet.throttle, 0, 255, 0, 100);
+}
+
+// Calcula o deslocamento em torno do ponto neutro (128) para simular aceleração/giros
+int axisOffsetFromCenter(byte v) {
+  return (int)v - 128;
+}
+
 void sendDataToApp() {
   // Envia dados no formato esperado pelo app MIT App Inventor
   // Cada linha com prefixo seguido do valor
 
   // Status de conexão
-  bt.print("CON:");
-  bt.print(ps2Ready ? "OK" : "FAIL");
-  bt.print("\n");
+  sendLineStr("CON:", ps2Ready ? "OK" : "FAIL");
 
   // Dados do controle (valores de 0-255)
-  bt.print("PITCH:");
-  bt.print(packet.pitch);
-  bt.print("\n");
-
-  bt.print("ROLL:");
-  bt.print(packet.roll);
-  bt.print("\n");
-
-  bt.print("YAW:");
-  bt.print(packet.yaw);
-  bt.print("\n");
+  sendLine("PITCH:", packet.pitch);
+  sendLine("ROLL:", packet.roll);
+  sendLine("YAW:", packet.yaw);
 
   // Throttle (convertido para percentual 0-100 para melhor visualização)
-  bt.print("BAT:");
-  bt.print(map(packet.throttle, 0, 255, 0, 100));
-  bt.print("\n");
+  sendLine("BAT:", throttlePercent());
 
   // Tensão simulada (baseada no throttle, 0-100%)
-  bt.print("VOLT:");
-  bt.print(map(packet.throttle, 0, 255, 0, 100));
-  bt.print("\n");
+  sendLine("VOLT:", throttlePercent());
 
   // Altura simulada (pode ser ajustada conforme necessário)
-  bt.print("ALT:");
-  bt.print(0);
-  bt.print("\n");
+  sendLine("ALT:", 0);
 
   // Velocidade aproximada simulada
-  bt.print("VLAPX:");
-  bt.print(map(packet.throttle, 0, 255, 0, 100));
-  bt.print("\n");
+  sendLine("VLAPX:", throttlePercent());
 
   // Aceleração simulada (baseada nos valores do joystick)
   // AX, AY, AZ podem ser calculados a partir de pitch, roll, yaw
-  bt.print("AX:");
-  bt.print((int)packet.pitch - 128);
-  bt.print("\n");
-
-  bt.print("AY:");
-  bt.print((int)packet.roll - 128);
-  bt.print("\n");
-
-  bt.print("AZ:");
-  bt.print((int)packet.yaw - 128);
-  bt.print("\n");
+  sendLine("AX:", axisOffsetFromCenter(packet.pitch));
+  sendLine("AY:", axisOffsetFromCenter(packet.roll));
+  sendLine("AZ:", axisOffsetFromCenter(packet.yaw));
 
   // Giroscópio simulada (valores relativos ao centro 128)
-  bt.print("GX:");
-  bt.print((int)packet.roll - 128);
-  bt.print("\n");
-
-  bt.print("GY:");
-  bt.print((int)packet.pitch - 128);
-  bt.print("\n");
-
-  bt.print("GZ:");
-  bt.print((int)packet.yaw - 128);
-  bt.print("\n");
+  sendLine("GX:", axisOffsetFromCenter(packet.roll));
+  sendLine("GY:", axisOffsetFromCenter(packet.pitch));
+  sendLine("GZ:", axisOffsetFromCenter(packet.yaw));
 
   // Envia um delimitador final para indicar fim do pacote
   bt.print("\n");
